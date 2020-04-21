@@ -14,6 +14,12 @@ class AuthController {
 		return token
 	}
 
+	async logout({auth}){
+
+		await auth.logout()
+	}
+
+
 
 	async teste (){
 		

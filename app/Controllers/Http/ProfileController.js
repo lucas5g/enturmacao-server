@@ -1,58 +1,28 @@
 'use strict'
 
-/** @typedef {import('@adonisjs/framework/src/Request')} Request */
-/** @typedef {import('@adonisjs/framework/src/Response')} Response */
-/** @typedef {import('@adonisjs/framework/src/View')} View */
+const Profile = use('App/Models/Profile')
 
-/**
- * Resourceful controller for interacting with profiles
- */
 class ProfileController {
-  /**
-   * Show a list of all profiles.
-   * GET profiles
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
+
   async index ({ request, response, view }) {
+
+    return await Profile.query()
+      .orderBy('name', 'asc')
+      .fetch()
+
   }
 
-  /**
-   * Render a form to be used for creating a new profile.
-   * GET profiles/create
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
+
   async create ({ request, response, view }) {
   }
 
-  /**
-   * Create/save a new profile.
-   * POST profiles
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
+
   async store ({ request, response }) {
   }
 
-  /**
-   * Display a single profile.
-   * GET profiles/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
   async show ({ params, request, response, view }) {
+
+    return await Profile.find(params.id)
   }
 
   /**

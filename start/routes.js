@@ -17,14 +17,24 @@
 const Route = use('Route')
 
 Route.get('/', () => {
-  return { greeting: 'Hello world in JSON' }
+  return { app: 'Entumação api' }
 })
 
 Route.post('/login', 'AuthController.authenticate')
-Route.get('/teste', 'AuthController.teste')
+//Route.get('/teste', 'AuthController.teste')
 
 Route.group(() => {
 
+	//Route.get('/logout', 'AuthController.logout') dont work
+
 	Route.resource('/users', 'UserController').apiOnly()
+	Route.resource('/profiles', 'ProfileController').apiOnly()
+	Route.resource('/students', 'StudentController').apiOnly()
+	//Route.resource('/courses', 'CourseController').apiOnly()
+	Route.get('/courses', 'CourseController.index')
+	Route.get('/courses/:codcur/:codper', 'CourseController.show')
+	
+	Route.resource('/classes', 'ClassController').apiOnly()
+	
 }).middleware('auth')
 

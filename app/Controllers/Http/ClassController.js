@@ -1,23 +1,13 @@
 'use strict'
 
-/** @typedef {import('@adonisjs/framework/src/Request')} Request */
-/** @typedef {import('@adonisjs/framework/src/Response')} Response */
-/** @typedef {import('@adonisjs/framework/src/View')} View */
+const Class = use('App/Models/Class')
 
-/**
- * Resourceful controller for interacting with classes
- */
 class ClassController {
-  /**
-   * Show a list of all classes.
-   * GET classes
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
+
   async index ({ request, response, view }) {
+
+    return await Class.all()
+    
   }
 
   /**
