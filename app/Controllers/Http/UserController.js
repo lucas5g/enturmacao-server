@@ -17,7 +17,10 @@ class UserController {
 
 	async show({params}){
 
-		return await User.find(params.id)
+		const user = await User.find(params.id)
+		user.courses = await user.courses().fetch()
+
+		return user
 	}
 
 	async update({params, request}){

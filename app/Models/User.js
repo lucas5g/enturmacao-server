@@ -38,6 +38,11 @@ class User extends Model {
   tokens () {
     return this.hasMany('App/Models/Token')
   }
+  courses(){
+    return this.belongsToMany('App/Models/Course')
+      .pivotTable('users_courses')
+      //.withPivot(['course_id'])
+  }
 }
 
 module.exports = User

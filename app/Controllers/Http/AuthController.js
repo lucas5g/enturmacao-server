@@ -10,7 +10,9 @@ class AuthController {
 		const {email, password}  = request.all()
 
 		const token = await auth.attempt(email, password)
-		token.user = await User.findBy({email})
+		const user = await User.findBy({email})
+		user.courses = await user.courses().fetch()
+		token.user = user
 		return token
 	}
 
