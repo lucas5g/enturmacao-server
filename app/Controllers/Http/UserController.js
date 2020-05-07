@@ -1,6 +1,8 @@
 'use strict'
 
 const User = use('App/Models/User')
+const UserCourseController = use('/UserCourseController')
+const UserCourse = new UserCourseController()
 const Profile = use('App/Models/Profile')
 const Hash = use('Hash')
 
@@ -37,14 +39,16 @@ class UserController {
 
 
 		if(password)
-			data.password = await Hash.make(password)		
+      data.password = await Hash.make(password)
+
+    await UserCourse.store()
 
 		await User.query()
 			.update(data)
 			.where('id', id)
 
 		return coursesDelete
-			
+
 
 		return await User.find(id)
 
