@@ -19,6 +19,7 @@ class UserController {
 
 		const user = await User.find(params.id)
 		user.courses = await user.courses().fetch()
+		user.coursesDelete = []
 
 		return user
 	}
@@ -27,7 +28,7 @@ class UserController {
 
 		const {id} = params
 		const data = request.only(['email', 'email_sup', 'email_secretary','name', 'profile_name'])
-		const {password, courses} = request.all()
+		const {password, courses, coursesDelete} = request.all()
 
 		const profile = await Profile.findBy({name:data.profile_name})
 
@@ -41,6 +42,8 @@ class UserController {
 		await User.query()
 			.update(data)
 			.where('id', id)
+
+		return coursesDelete
 			
 
 		return await User.find(id)
