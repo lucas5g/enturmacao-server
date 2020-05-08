@@ -28,6 +28,8 @@ Route.group(() => {
 	//Route.get('/logout', 'AuthController.logout') dont work
 
 	Route.resource('/users', 'UserController').apiOnly()
+	Route.get('/users/filter/:search', 'UserController.index')
+	
 	Route.resource('/profiles', 'ProfileController').apiOnly()
 	Route.resource('/students', 'StudentController').apiOnly()
 	//Route.resource('/courses', 'CourseController').apiOnly()

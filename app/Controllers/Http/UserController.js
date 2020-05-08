@@ -8,14 +8,23 @@ const Hash = use('Hash')
 
 class UserController {
 
-	async index({}){
+	async index({params}){
 
+		const {search} = params
+		if(search){
+			return User.query()
+			.where('name', 'like', `%${decodeURI(search)}%`)
+			.orderBy('name', 'asc')
+			.fetch()			
+		}
 		return User.query()
 			.orderBy('name', 'asc')
-			.fetch()
+			.fetch()			
 
-
+	
 	}
+
+	//async 
 
 	async show({params}){
 
@@ -41,7 +50,8 @@ class UserController {
 		if(password)
       data.password = await Hash.make(password)
 
-    await UserCourse.store()
+		await UserCourse.store(courses, id)
+		await UserCourse.destroy(coursesDelete, id)
 
 		await User.query()
 			.update(data)
