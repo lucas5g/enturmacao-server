@@ -21,6 +21,16 @@ class CourseController {
     const course = await Course.findBy({codcur, codper, shift})
 
     if(!course)
+      return {message: 'Curso não encontrado'}
+
+    course.students = await Student.query()
+      .where({codcur, codper, turno:shift})
+      .fetch()
+
+    return course
+
+    /*
+    if(!course)
       return {message: 'Curso não cadastrado'}
     
     let classFind = await Class.query()
@@ -38,12 +48,10 @@ class CourseController {
       name: 'Sem Turma',
       students: await Student.query().where({codcur, codper, class_id:0}).fetch()
     })
-    /** */
 
     course.classes = classFind
-  
+    /** */
 
-    return course
     
   }
 
