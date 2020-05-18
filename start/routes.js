@@ -34,7 +34,7 @@ Route.group(() => {
 	Route.resource('/students', 'StudentController').apiOnly()
 	//Route.resource('/courses', 'CourseController').apiOnly()
 	Route.get('/courses', 'CourseController.index')
-	Route.get('/courses/:codcur/:codper', 'CourseController.show')
+	Route.get('/courses/:codcur/:codper/:shift', 'CourseController.show')
 	
 	Route.resource('/classes', 'ClassController').apiOnly()
 	

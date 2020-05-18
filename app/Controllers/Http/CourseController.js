@@ -16,16 +16,19 @@ class CourseController {
 
   async show ({ params, request, response, view }) {
 
-    const {codcur, codper} = params
+    let {codcur, codper, shift} = params
+    shift = decodeURI(shift)
+    const course = await Course.findBy({codcur, codper, shift})
 
+    if(!course)
+      return {message: 'Curso não cadastrado'}
     
-    const course = await Course.findBy({codcur, codper})
     let classFind = await Class.query()
-      .where({codcur: course.codcur, codper: course.codper})
+      .where({codcur, codper, shift})
       .fetch()
 
     classFind = classFind.toJSON()
- 
+    
     for(let r in classFind){
       classFind[r].students = await Student.query().where({class_id: classFind[r].id}).fetch()
     }
@@ -33,8 +36,9 @@ class CourseController {
     classFind.unshift({
       id: 0,
       name: 'Sem Turma',
-      students: await Student.query().where({codcur: course.codcur, codper: course.codper, class_id:0}).fetch()
+      students: await Student.query().where({codcur, codper, class_id:0}).fetch()
     })
+    /** */
 
     course.classes = classFind
   

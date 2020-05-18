@@ -7,7 +7,16 @@ class UserCourseController {
 
     
     for (let r in courses){     
-      await UserCourse.create({ course_id: courses[r].id, user_id })
+      //verifica se usuario ja possui o curso
+      let verify  = await UserCourse.query()
+        .where({course_id:courses[r].id, user_id})
+        .fetch()
+        verify = verify.toJSON()
+        
+        //caso nao tenha, inserir
+      if(verify.length === 0){
+        await UserCourse.create({ course_id: courses[r].id, user_id })
+      }
     }
     
   }

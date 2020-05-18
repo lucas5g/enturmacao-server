@@ -8,9 +8,10 @@ class CoursesSchema extends Schema {
     this.create('courses', (table) => {
       table.increments()
       table.string('name').notNullable()
-      table.string('unity').notNullable()
+      table.string('shift').notNullable()
       table.integer('codcur').notNullable()
       table.integer('codper').notNullable()
+      table.string('alias')
       table.timestamps()
     })
   }
