@@ -32,10 +32,11 @@ Route.group(() => {
 	
 	Route.resource('/profiles', 'ProfileController').apiOnly()
 	Route.resource('/students', 'StudentController').apiOnly()
-	//Route.resource('/courses', 'CourseController').apiOnly()
+	Route.resource('/courses', 'CourseController').apiOnly()
+	/*
 	Route.get('/courses', 'CourseController.index')
 	Route.get('/courses/:codcur/:codper/:shift', 'CourseController.show')
-	
+	/** */
 	Route.resource('/classes', 'ClassController').apiOnly()
 	
 }).middleware('auth')

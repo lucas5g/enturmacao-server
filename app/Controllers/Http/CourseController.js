@@ -7,57 +7,73 @@ class CourseController {
 
   async index ({ request, response, view }) {
 
-    return await Course.all()
+    return await Course.query()
+      .orderBy('unity', 'asc')
+      .orderBy('name', 'asc')
+      .fetch()
   }
 
   async store ({ request, response }) {
+    const data = request.only(['name', 'shift', 'unity', 'codcur', 'codper' ])
+
+    return await Course.create(data)
+
+    //return data
 
   }
 
   async show ({ params, request, response, view }) {
 
-    let {codcur, codper, shift} = params
-    shift = decodeURI(shift)
-    const course = await Course.findBy({codcur, codper, shift})
+    const {id} = params
+    const course = await Course.find(id)
 
     if(!course)
       return {message: 'Curso não encontrado'}
 
-    course.students = await Student.query()
-      .where({codcur, codper, turno:shift})
-      .fetch()
+    //return course
+    const {codcur, codper, shift} = course
 
-    return course
-
-    /*
-    if(!course)
-      return {message: 'Curso não cadastrado'}
-    
     let classFind = await Class.query()
       .where({codcur, codper, shift})
       .fetch()
 
     classFind = classFind.toJSON()
     
+    //return classFind
     for(let r in classFind){
-      classFind[r].students = await Student.query().where({class_id: classFind[r].id}).fetch()
+      classFind[r].students = await Student.query()
+      .where({class_id: classFind[r].id})
+      .orderBy('nome', 'asc')
+      .fetch()
     }
+
+    //Students without class
     
     classFind.unshift({
       id: 0,
       name: 'Sem Turma',
-      students: await Student.query().where({codcur, codper, class_id:0}).fetch()
+      students: await Student.query()
+        .where({codcur, codper, class_id:0, turno:shift})
+        .orderBy('nome', 'asc')
+        .fetch()
     })
 
     course.classes = classFind
-    /** */
+    return course
+
 
     
   }
 
 
   async update ({ params, request, response }) {
+    const data = request.only(['name', 'shift', 'unity', 'codcur', 'codper' ])
+    const {id} = params
 
+    await Course.query()
+      .update(data)
+      .where({id})
+    return await Course.find(id)
   }
 
   async destroy ({ params, request, response }) {
@@ -66,3 +82,6 @@ class CourseController {
 }
 
 module.exports = CourseController
+    /*
+   
+    /** */
