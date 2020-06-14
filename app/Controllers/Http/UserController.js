@@ -17,7 +17,9 @@ class UserController {
 			.orderBy('name', 'asc')
 			.fetch()			
 		}
+
 		return User.query()
+			.with('courses')
 			.orderBy('name', 'asc')
 			.fetch()			
 	}
