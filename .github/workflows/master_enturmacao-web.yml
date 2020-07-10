@@ -31,5 +31,5 @@ jobs:
       with:
         app-name: 'enturmacao-web'
         slot-name: 'production'
-        publish-profile: ${{ secrets.AzureAppService_PublishProfile_8fb80ade0f8846d49738250cfe6bfa01 }}
+        publish-profile: ${{ secrets.AzureAppService_PublishProfile_9c27310ecd8c4a89a9a9fafd1d00b882 }}
         package: .
